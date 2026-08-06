@@ -1,6 +1,7 @@
 streamlit==1.39.0
 pandas==2.2.2
 scikit-learn==1.9.0
+imbalanced-learn==0.14.2
 xgboost==3.4.0
 shap==0.52.0
 matplotlib==3.9.2
