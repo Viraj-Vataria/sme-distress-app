@@ -44,8 +44,11 @@ so its outputs reflect what can honestly be inferred before failure occurs.
 
 ## Repository structure
 ├── app.py # Streamlit application
+
 ├── requirements.txt # Dependencies
+
 ├── assets/ # Calibrated model and sector lookup tables
+
 └── README.md
 
 
