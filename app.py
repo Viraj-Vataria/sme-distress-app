@@ -1,14 +1,4 @@
-# =============================================================================
 # UK SME Financial Distress Screening Tool
-# BEMM828 MSc Project | Candidate 750069561
-#
-# A decision-support prototype. It loads the calibrated XGBoost model trained on
-# UK open government data and returns, for a single company, a probability of
-# financial distress, an interpretable Business Health Score (300-850), an
-# indicative risk-based charge, and a SHAP explanation of the drivers. No raw
-# training data is shipped with the app; only the serialised model and small
-# sector lookup tables.
-# =============================================================================
 
 import json
 from pathlib import Path
@@ -20,9 +10,7 @@ import shap
 import matplotlib.pyplot as plt
 import streamlit as st
 
-# -----------------------------------------------------------------------------
-# Page configuration and light styling
-# -----------------------------------------------------------------------------
+
 st.set_page_config(
     page_title="UK SME Distress Screening",
     page_icon="📊",
@@ -46,12 +34,8 @@ st.markdown(
 
 ASSETS = Path(__file__).parent / "assets"
 
-# Fixed Business Health Score reference range, derived from the scored test set.
-# Using fixed bounds (not the min/max of a single input) is what makes the score
-# meaningful for one company at a time.
 LOGIT_FLOOR, LOGIT_CEILING = -5.7666, -0.3918
 
-# Friendly names must match the section labels used when the model was trained.
 SECTION_NAMES = {
     "B": "Mining", "C": "Manufacturing", "D": "Energy", "E": "Water and waste",
     "F": "Construction", "G": "Wholesale and retail", "H": "Transport and storage",
@@ -75,9 +59,6 @@ ACCOUNT_CATEGORIES = [
 ]
 
 
-# -----------------------------------------------------------------------------
-# Load model and reference tables once and cache them
-# -----------------------------------------------------------------------------
 @st.cache_resource
 def load_model_assets():
     schema = json.loads((ASSETS / "model_schema.json").read_text())
@@ -101,9 +82,6 @@ LOSS_GIVEN_DEFAULT = schema["loss_given_default"]
 EXPOSURE_AT_DEFAULT = schema["exposure_at_default"]
 
 
-# -----------------------------------------------------------------------------
-# Helper functions
-# -----------------------------------------------------------------------------
 def assemble_feature_vector(age, sic_count, charges_outstanding, charges_satisfied,
                             section_letter, region, account_category):
     """Turn a set of plain inputs into the exact 48-column model row."""
@@ -150,9 +128,6 @@ def score_to_tier(score):
     return "Very low risk", "#2E86AB"
 
 
-# -----------------------------------------------------------------------------
-# Sidebar: company inputs
-# -----------------------------------------------------------------------------
 st.sidebar.header("Company details")
 
 selected_section_name = st.sidebar.selectbox(
@@ -172,9 +147,6 @@ charges_satisfied = st.sidebar.number_input("Satisfied charges (repaid secured d
 assess = st.sidebar.button("Assess distress risk", type="primary", use_container_width=True)
 
 
-# -----------------------------------------------------------------------------
-# Main panel
-# -----------------------------------------------------------------------------
 st.title("UK SME Financial Distress Screening")
 st.caption(
     "A decision-support prototype built on UK open government data "
@@ -207,7 +179,7 @@ st.markdown(
 )
 st.progress(min(1.0, distress_probability / 0.5))
 
-# ---- Explanation of the drivers with SHAP ----
+
 st.subheader("Why this result")
 st.write(
     "The chart below shows which factors pushed this company's risk up (red) "
