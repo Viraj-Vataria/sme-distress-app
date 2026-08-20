@@ -5,7 +5,7 @@ distress for a UK small or medium-sized enterprise (SME) from open government
 data, and returns an interpretable Business Health Score with a transparent,
 feature-level explanation of every result.
 
-**Live app:** https://your-app-url.streamlit.app
+**Live app:** https://sme-distress-app.streamlit.app/ 
 
 ---
 
@@ -38,7 +38,7 @@ bundled or exposed.
 - **Test performance:** ROC-AUC 0.83, calibrated Brier score 0.04.
 
 A deliberate design choice was to exclude filing-behaviour features that are
-partly a *consequence* of insolvency, which inflate apparent accuracy through
+partly a consequence of insolvency, which inflate apparent accuracy through
 target leakage. The deployed model uses leakage-free structural features only,
 so its outputs reflect what can honestly be inferred before failure occurs.
 
@@ -49,16 +49,6 @@ so its outputs reflect what can honestly be inferred before failure occurs.
 └── README.md
 
 
-## Run locally
-
-```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-The app opens at `http://localhost:8501`.
 
 ## Tech stack
 
@@ -71,7 +61,3 @@ outputs are indicative only and do not constitute a lending, underwriting or
 credit decision. It is intended as decision-support, not automated
 decision-making.
 
-## Author
-
-Developed as part of an MSc Business Analytics project at the University of
-Exeter, 2026.
